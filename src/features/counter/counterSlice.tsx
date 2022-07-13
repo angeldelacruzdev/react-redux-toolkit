@@ -20,12 +20,12 @@ export const counterSlice = createSlice({
       if (state.value !== 0) state.value -= 1;
     },
 
-    incrementByAmout: (state, action: PayloadAction<number>) => {
+    amountAdded: (state, action: PayloadAction<number>) => {
       state.value += action.payload;
     },
   },
 });
 
-export const { increment, decrement, incrementByAmout } = counterSlice.actions;
+export const { increment, decrement, amountAdded } = counterSlice.actions;
 
 export default counterSlice.reducer;

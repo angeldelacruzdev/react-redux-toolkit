@@ -1,9 +1,13 @@
 import { useAppDispatch, useAppSelector } from "./hooks";
 import { decrement, amountAdded } from "./features/counter/counterSlice";
-
+import { useFetchBreedsQuery } from "./features/dogs/dogs-api-slice";
+import { useState } from "react";
 function App() {
   const value = useAppSelector((state) => state.counterSlice.value);
   const dispatch = useAppDispatch();
+  const [numBerry, setNumBerry] = useState(10);
+
+  const { data } = useFetchBreedsQuery(numBerry);
 
   return (
     <div className="container mx-auto text-center">
@@ -26,6 +30,33 @@ function App() {
             Decrement
           </button>
         </div>
+      </div>
+
+      <div className="flex  justify-center flex-col">
+        <p>Number of berries fetched: {data?.results.length}</p>
+        <select
+          className="w-1/3"
+          value={numBerry}
+          onChange={(e) => setNumBerry(Number(e.target.value))}
+        >
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+        </select>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data?.results.map((items) => (
+              <tr key={items.url}>
+                <td>{items.name}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
